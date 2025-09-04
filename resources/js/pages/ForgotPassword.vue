@@ -29,7 +29,7 @@
 
               <p class="text-center mt-4 mb-0 small">
                 Remembered your password?
-                <a href="#" class="text-decoration-none">Back to Login</a>
+                <RouterLink :to="{name : 'login'}" class="text-decoration-none">Back to Login</RouterLink>
               </p>
             </div>
           </div>

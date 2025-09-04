@@ -13,3 +13,5 @@ Route::delete('/user/{user}', [UserController::class, 'destroy']);
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/signup', [AuthController::class, 'signup'])->name('signup');  
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('password.forgot');  
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');  

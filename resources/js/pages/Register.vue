@@ -42,7 +42,7 @@
 
               <p class="text-center mt-4 mb-0 small">
                 Already have an account?
-                <a href="#" class="text-decoration-none">Login</a>
+                <RouterLink :to="{name : 'login'}" class="text-decoration-none">login</RouterLink>
               </p>
             </div>
           </div>
@@ -68,14 +68,19 @@ const formData = ref({
   password_confirmation: '',
 })
 
+const data = ref(null);
+const error = ref(null);
+
 const submitForm = () => {
   axios.post('/api/signup', formData.value)
     .then(res => {
-      console.log(res.data);
+      data.value = res.data;
       router.push('/login');
+      console.log(data);
     })
     .catch(err => {
-      console.error(err);
+      error.value = err.error;
+      console.error(error);
     });
 }
 </script>

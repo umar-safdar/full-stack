@@ -11,14 +11,16 @@
                 <div class="mb-3">
                   <label class="form-label" for="email">Email</label>
                   <input v-model="formData.email" type="email" class="form-control" placeholder="you@example.com" />
-                  <span v-if="errs.email">{{ errs.email }}</span>
+                  <span v-if="error?.email" class="text-red-500 text-sm mt-1 block">
+  {{ error.email[0] }}
+</span>
                 </div>
 
                 <div class="mb-3">
                   <label class="form-label" for="password">Password</label>
                   <input v-model="formData.password" type="password" class="form-control" autocomplete
                     placeholder="••••••••" />
-                  <span v-if="errs.password">{{ errs.password }}</span>
+                  <span v-if="error?.password" class="text-red-500 text-sm mt-1 block">{{ error.password[0] }}</span>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -26,7 +28,7 @@
                     <input id="remember" class="form-check-input" type="checkbox" />
                     <label class="form-check-label" for="remember">Remember me</label>
                   </div>
-                  <a href="#" class="small text-decoration-none">Forgot password?</a>
+                <RouterLink :to="{name : 'forgot-password'}" class="text-decoration-none">Forgot password?</RouterLink>
                 </div>
 
                 <button class="btn btn-primary w-100" type="submit">
@@ -36,7 +38,7 @@
 
               <p class="text-center mt-4 mb-0 small">
                 Don’t have an account?
-                <a href="#" class="text-decoration-none">Register</a>
+                <RouterLink :to="{name : 'signup'}" class="text-decoration-none">Register</RouterLink>
               </p>
             </div>
           </div>
@@ -62,58 +64,58 @@ const formData = ref({
   email: '',
   password: '',
 })
-const errs = reactive({
-  email: null,
-  password: null,
-  global: null,
-})
+// const errs = reactive({
+//   email: null,
+//   password: null,
+//   global: null,
+// })
 
-const submitForm = async () => {
-  loading.value = true
-  errs.email = errs.password = errs.global = null
+const data = ref([null]);
+const error = ref({});
 
-  try {
-    const { data } = await axios.post('/api/login', formData.value)
-    localStorage.setItem('token', data.token)
-    await router.push('/')
-  } catch (err) {
-    if (axios.isAxiosError(err)) {
-      const payload = err.response?.data || {}
-      console.log(payload);
-      console.log('general log',err);
-      // errs.email = payload.message.email || null
-      // errs.password = payload.message.password || null
-      // errs.global = payload.message || null
+// const submitForm = async () => {
+//   loading.value = true
+//   errs.email = errs.password = errs.global = null
 
-      // Laravel-style validation errors
-      const v = payload.errors || {}
-      errs.email = Array.isArray(v.email) ? v.email[0] : v.email ?? null
-      errs.password = Array.isArray(v.password) ? v.password[0] : v.password ?? null
+//   try {
+//     const { data } = await axios.post('/api/login', formData.value)
+//     localStorage.setItem('token', data.token)
+//     await router.push('/')
+//   } catch (err) {
+//     if (axios.isAxiosError(err)) {
+//       const payload = err.response?.data || {}
+//       console.log(payload);
+//       console.log('general log',err);
+//       // errs.email = payload.message.email || null
+//       // errs.password = payload.message.password || null
+//       // errs.global = payload.message || null
 
-    } else {
-      // errs.global = 'Unexpected error. Please try again.'
-    }
+//       // Laravel-style validation errors
+//       const v = payload.errors || {}
+//       errs.email = Array.isArray(v.email) ? v.email[0] : v.email ?? null
+//       errs.password = Array.isArray(v.password) ? v.password[0] : v.password ?? null
 
-    console.log(errs)
-  } finally {
-    loading.value = false
-  }
-}
+//     } else {
+//       // errs.global = 'Unexpected error. Please try again.'
+//     }
 
-// const submitForm = () => {
-//   axios.post('/api/login', formData.value)
-//     .then(res => {
-//       localStorage.setItem('token', res.data.token)
-//       router.push('/')
-//     })
-//     .catch(err => {
-//       const errors = err.response?.data?.errors || {}
-//       // Laravel-style: errors.email/password may be arrays
-//       errs.email = Array.isArray(errors.email) ? errors.email[0] : errors.email || null
-//       errs.password = Array.isArray(errors.password) ? errors.password[0] : errors.password || null
-//       console.log(errs);
-      
-      
-//     })
+//     console.log(errs)
+//   } finally {
+//     loading.value = false
+//   }
 // }
+
+const submitForm = () => {
+  axios.post('/api/login', formData.value)
+    .then(res => {
+      data.value = res.data;
+      console.log(data);
+      localStorage.setItem('token', res.data.token)
+      router.push('/')
+    })
+    .catch(err => {
+      error.value = err.response.data.errors;
+      console.log(err.response.data.errors);      
+    })
+}
 </script>

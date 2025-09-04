@@ -24,18 +24,22 @@ const routes = [
   },
   {
     path: '/login',
+    name: 'login',
     component: Login,
   },
   {
     path: '/signup',
+    name: 'signup',
     component: Register,
   },
   {
     path: '/forgot-password',
+    name: 'forgot-password',
     component: ForgotPassword,
   },
   {
     path: '/reset-password',
+    name: 'reset-password',
     component: ResetPassword,
   },
 
