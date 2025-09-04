@@ -35,7 +35,7 @@ class UserController extends Controller
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => bcrypt($validatedData['password']),
-        ]);]
+        ]);
 
         return response()->json($user, 201);
     }

@@ -59,3 +59,18 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+
+## problem this in terminal to run the php artisan command
+  The C:\wamp64\www\full-stack\bootstrap\cache directory must be present and writable.  
+                                                                                        
+
+## solution
+-> bootstrap/cache folder delete karo
+-> Dobara create karo:
+        mkdir C:\wamp64\www\full-stack\bootstrap\cache
+after create \bootstrap\cache to run command
+
+php artisan package:discover --verbose
