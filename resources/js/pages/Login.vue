@@ -26,7 +26,7 @@
                     <input id="remember" class="form-check-input" type="checkbox" />
                     <label class="form-check-label" for="remember">Remember me</label>
                   </div>
-                  <a href="#" class="small text-decoration-none">Forgot password?</a>
+                <RouterLink :to="{name : 'forgot-password'}" class="text-decoration-none">Forgot password?</RouterLink>
                 </div>
 
                 <button class="btn btn-primary w-100" type="submit">
@@ -36,7 +36,7 @@
 
               <p class="text-center mt-4 mb-0 small">
                 Don’t have an account?
-                <a href="#" class="text-decoration-none">Register</a>
+                <RouterLink :to="{name : 'signup'}" class="text-decoration-none">Register</RouterLink>
               </p>
             </div>
           </div>
