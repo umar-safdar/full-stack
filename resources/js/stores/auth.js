@@ -35,8 +35,7 @@ export const useAuthStore = defineStore("AuthStore", () => {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             });
-            console.log(tokan);
-            
+            localStorage.removeItem("token");
             error.value = {};
             await router.push("login");
 

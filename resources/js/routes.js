@@ -15,6 +15,7 @@ const routes = [
   {
     path: '/',
     component: GuestLayout,
+    meta: {auth: true},
     children: [
       {
         path: '/',
@@ -47,6 +48,7 @@ const routes = [
 {
     path: '/dashboard',
     component: DashboardLayout,
+    meta: {auth: true},
     children: [
       {
         path: '/dashboard',
@@ -59,6 +61,18 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+
+  const token = localStorage.getItem('token');
+
+if (to.meta.auth && !token) {
+    next('/login');  
+  } else {
+    next();
+  }
+
 })
 
 export default router
