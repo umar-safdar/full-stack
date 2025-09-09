@@ -74,3 +74,14 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 after create \bootstrap\cache to run command
 
 php artisan package:discover --verbose
+
+## email config
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_ENCRYPTION=tls
+MAIL_USERNAME="safdermerajpak@gmail.com"
+MAIL_PASSWORD='exxk vnmd ssrk gdgw'
+MAIL_FROM_ADDRESS=safdermerajpak@gmail.com
+MAIL_FROM_NAME="Your App"
+
