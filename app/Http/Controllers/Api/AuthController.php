@@ -116,7 +116,7 @@ class AuthController extends Controller
         $user->tokens()->delete();
 
         return response()->json([
-            'message' => 'User registered successfully',
+            'message' => 'User logout successfully',
             'user' => $user,
             
         ], 201);

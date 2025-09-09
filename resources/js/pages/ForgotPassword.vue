@@ -6,20 +6,18 @@
           <div class="card shadow-sm border-0">
             <div class="card-body p-4 p-md-5">
               <h1 class="h4 mb-4 text-center">Forgot Password</h1>
-
+               <div v-if="error.general" class="alert alert-danger py-2 px-3 mt-3 small text-center text-black">
+                {{ error.general }}
+              </div>
               <p class="text-muted small mb-4 text-center">
                 Enter your email address and we’ll send you instructions to reset your password.
               </p>
 
-              <form>
+              <form @submit.prevent="authenticate('forgot-password', formData)">
                 <div class="mb-3">
                   <label class="form-label" for="email">Email address</label>
-                  <input
-                    id="email"
-                    type="email"
-                    class="form-control"
-                    placeholder="you@example.com"
-                  />
+                   <input v-model="formData.email" type="email" class="form-control" placeholder="you@example.com" />
+                   <span class="text-danger small d-block mt-2" v-if="error.email">{{ error.email[0] }}</span>
                 </div>
 
                 <button class="btn btn-primary w-100" type="submit">
@@ -41,4 +39,20 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from "@/stores/auth";
+
+
+const router = useRouter();
+const { error } = storeToRefs(useAuthStore());
+const { authenticate, debug } = useAuthStore();
+
+
+const formData = reactive({
+  email: '',
+})
+
+</script>

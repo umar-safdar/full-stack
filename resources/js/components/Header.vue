@@ -2,6 +2,10 @@
   <header class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand fw-bold" href="#">MyShop</a>
+      <form action="" @submit.prevent="logout('logout')">
+
+        <button class="navbar-brand fw-bold" >logout</button>
+      </form>
 
       <!-- Mobile toggle -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
@@ -31,4 +35,15 @@
   </header>
 </template>
 
-<script setup></script>
+<script setup>
+
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from "@/stores/auth";
+
+
+const router = useRouter();
+const { error } = storeToRefs(useAuthStore());
+const { logout, } = useAuthStore();
+
+</script>

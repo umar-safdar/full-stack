@@ -6,19 +6,21 @@
           <div class="card shadow-sm border-0">
             <div class="card-body p-4 p-md-5">
               <h1 class="h4 mb-4 text-center">Login</h1>
-
-              <form @submit.prevent="authenticate('login',formData)">
+              <div v-if="error.general" class="alert alert-danger py-2 px-3 mt-3 small text-center text-black">
+                {{ error.general }}
+              </div>
+              <form @submit.prevent="authenticate('login', formData)">
                 <div class="mb-3">
                   <label class="form-label" for="email">Email</label>
                   <input v-model="formData.email" type="email" class="form-control" placeholder="you@example.com" />
-                  <span v-if="error.email">{{ error.email[0] }}</span>
+                  <span class="text-danger small d-block mt-2" v-if="error.email">{{ error.email[0] }}</span>
                 </div>
 
                 <div class="mb-3">
                   <label class="form-label" for="password">Password</label>
                   <input v-model="formData.password" type="password" class="form-control" autocomplete
                     placeholder="••••••••" />
-                  <span v-if="error.password">{{ error.password[0] }}</span>
+                  <span class="text-danger small d-block mt-2" v-if="error.password">{{ error.password[0] }}</span>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -26,7 +28,8 @@
                     <input id="remember" class="form-check-input" type="checkbox" />
                     <label class="form-check-label" for="remember">Remember me</label>
                   </div>
-                <RouterLink :to="{name : 'forgot-password'}" class="text-decoration-none">Forgot password?</RouterLink>
+                  <RouterLink :to="{ name: 'forgot-password' }" class="text-decoration-none">Forgot password?
+                  </RouterLink>
                 </div>
 
                 <button class="btn btn-primary w-100" type="submit">
@@ -36,7 +39,7 @@
 
               <p class="text-center mt-4 mb-0 small">
                 Don’t have an account?
-                <RouterLink :to="{name : 'signup'}" class="text-decoration-none">Register</RouterLink>
+                <RouterLink :to="{ name: 'signup' }" class="text-decoration-none">Register</RouterLink>
               </p>
             </div>
           </div>
@@ -51,24 +54,21 @@
 </template>
 
 <script setup>
-import axios from 'axios';
-import { ref ,reactive} from 'vue';
+import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from "@/stores/auth";
 
 
 const router = useRouter();
-const { error } = storeToRefs( useAuthStore() );
-const { authenticate } = useAuthStore();
+const { error } = storeToRefs(useAuthStore());
+const { authenticate, debug } = useAuthStore();
 
 
-const formData = ref({
+const formData = reactive({
   email: '',
   password: '',
 })
-
-// console.log('umar',formData.value);
 
 
 </script>
