@@ -63,7 +63,7 @@
 
 <script setup>
 import axios from 'axios';
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from "@/stores/auth";
@@ -80,4 +80,7 @@ const formData = reactive({
   password_confirmation: '',
 })
 
+onMounted( () => {
+  error.value = {}
+})
 </script>

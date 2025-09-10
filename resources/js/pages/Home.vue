@@ -13,7 +13,7 @@
     </header>
 
     <!-- Category Filter Pills -->
-    <div class="mb-3 d-flex flex-wrap gap-2">
+   <div class="mb-3 d-flex flex-wrap gap-2">
       <button class="btn btn-sm btn-dark">All</button>
       <button class="btn btn-sm btn-outline-dark">Category 1</button>
       <button class="btn btn-sm btn-outline-dark">Category 2</button>
@@ -85,4 +85,16 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted } from "vue";
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from "@/stores/auth";
+const { getuser } = useAuthStore();
+const { user } = storeToRefs(useAuthStore());
+
+onMounted( () => {
+  getuser();
+})
+
+
+</script>

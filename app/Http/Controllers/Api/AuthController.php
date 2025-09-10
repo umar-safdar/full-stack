@@ -122,5 +122,15 @@ class AuthController extends Controller
         ], 201);
 
     }
+
+
+    public function getUser(Request $request)
+    {
+        $user = $request->user();
+        return response()->json([
+            'message' => 'User data',
+            'data' => new AuthResource($user),
+        ], 201);
+    }
    
 }

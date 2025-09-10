@@ -3,9 +3,29 @@ import { ref } from "vue";
 import { useRouter } from 'vue-router';
 
 export const useAuthStore = defineStore("AuthStore", () => {
-    const name = ref("umar");
+    const user = ref(null);
     const error = ref({});
     const router = useRouter();
+
+    //  ********************** getuser ********************** //
+    async function getuser() {
+        try {
+            const tokan = localStorage.getItem("token");
+            
+            const { data } = await axios.post(`/api/get-user`, {}, {
+                headers: {
+                    Authorization: `Bearer ${tokan}`
+                }
+            });
+
+            user.value = data.data;
+        } catch (err) {
+            if (axios.isAxiosError(err)) {
+                error.value = err.response?.data.errors ? err.response?.data.errors : { general: err.response?.data.message };
+            }
+
+        }
+    }
 
     //  ********************** login,Register ********************** //
     async function authenticate(apiRoute,formData) {
@@ -47,5 +67,5 @@ export const useAuthStore = defineStore("AuthStore", () => {
         }
     }
 
-    return {  authenticate, logout, error };
+    return {  authenticate, logout, getuser, error, user };
 });
